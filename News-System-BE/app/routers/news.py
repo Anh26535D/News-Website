@@ -1,13 +1,14 @@
+import os
 import sys
-
-from bson import ObjectId
 sys.path.insert(0,'News-System-BE/app/Service')
-from os import environ
+from bson import ObjectId
 
-MONGO_URI = environ.get('MONGO_URI')
-DB_NAME = environ.get('DB_NAME')
 
-from flask import Blueprint, jsonify, request
+
+MONGO_URI = os.environ.get('MONGO_URI')
+DB_NAME = os.environ.get('DB_NAME')
+
+from flask import Blueprint, request
 from Service.mongo import MongoService
 
 news_blueprint = Blueprint('news', __name__,)

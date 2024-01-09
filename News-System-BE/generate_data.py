@@ -78,5 +78,5 @@ class NewsDataGenerator:
         collection.insert_many(news)
         client.close()
 
-data_gen = NewsDataGenerator(mongodb_uri, None)
+data_gen = NewsDataGenerator(mongodb_uri, newsapi_apikey)
 data_gen.run()
