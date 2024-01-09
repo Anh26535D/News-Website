@@ -1,3 +1,9 @@
+### Requirements
+1. Python
+2. Node Package Manager: can be installed [here](https://nodejs.org/en/download)
+3. Docker
+
+### Usage
 1. The `mongo_compose.yaml` is optional if you use other mongodb instead of container. If you want to use docker container, run
     ```
     docker compose -f mongo_compose.yaml up -d
