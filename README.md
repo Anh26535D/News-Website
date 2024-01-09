@@ -4,7 +4,7 @@
 3. Docker
 
 ### Usage
-1. The `mongo_compose.yaml` is optional if you use other mongodb instead of container. If you want to use docker container, run
+1. [OPTIONAL] You can ignore `mongo_compose.yaml` if you use other mongodb instead of container, otherwise, run
     ```
     docker compose -f mongo_compose.yaml up -d
     ```
