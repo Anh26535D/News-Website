@@ -9,14 +9,14 @@
     docker compose -f mongo_compose.yaml up -d
     ```
 
-2. Create `.env` file in `News-System-BE/` by follow `.env.example` file, fetch data to mongodb and run server
+2. Create `.env` file in `News-System-BE/` by following `.env.example` file, fetch data to mongodb and run server
     ```
     cd News-System-BE
     python3 -m pip install -r requirements.txt
-    python generate_data.py
+    python generate_data.py # Optional
     python3 -m flask run
     ``` 
-3. Create `.env` file in `News-System-FE/` by follow `.env.example` file, then open other terminal to run frontend
+3. Create `.env` file in `News-System-FE/` by following `.env.example` file, then open other terminal to run frontend
     ```
     cd News-System-FE
     npm install
