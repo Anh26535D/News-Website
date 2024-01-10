@@ -8,7 +8,7 @@
 
 3. Create artifact reposotory
     ```
-    gcloud artifacts repositories create [REPO_NAME] --repository-format=docker --location=us-central1 --description="Docker repository"
+    gcloud artifacts repositories create docker-repo --repository-format=docker --location=us-central1 --description="Docker repository"
     ```
     and verify:
     ```
@@ -20,36 +20,34 @@
     gcloud auth configure-docker us-central1-docker.pkg.dev
     ```
 
-5. Tag the image 
+5. Build, tag and push the image to artifact registry
     ```
-    docker tag [DOCKER_IMAGE_NAME] us-central1-docker.pkg.dev/[PROJECT_NAME]/[REPO_NAME]/[IMAGE_NAME]:tag1
-    ```
-
-6. Push the image to Artifact Registry
-    ```
-    docker push us-central1-docker.pkg.dev/[PROJECT_NAME]/[REPO_NAME]/[IMAGE_NAME]:tag1
+    cd News-System-BE
+    docker build -t be-image .
+    docker tag be-image us-central1-docker.pkg.dev/news-database-55/docker-repo/be-image:tag1
+    docker push us-central1-docker.pkg.dev/news-database-55/docker-repo/be-image:tag1 
     ```
 
-7. Create GKE cluster (remember to enable Kubernetes Engine API)
+6. **[OPTIONAL]** Create GKE cluster (remember to enable Kubernetes Engine API)
     ```
     gcloud container --project "news-database-55" clusters create-auto "autopilot-cluster-1" --region "us-central1" --release-channel "regular" --network "projects/news-database-55/global/networks/default" --subnetwork "projects/news-database-55/regions/us-central1/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
     ```
 
-8. Download `kubens` and `kubectx` [here](https://github.com/ahmetb/kubectx) for faster switch context and namespace. Then switch to right context and namespace
-   ```
-   kubectx [CONTEXT_NAME]
-   kubens [NAMESPACE_NAME]
-   ```
-   then create Deployment
-   ```
-   kubectl apply -f deployment.yaml
-   ```
-   and Service
-   ```
-    kubectl apply -f service.yaml
-   ```
+7.  Download `kubens` and `kubectx` [here](https://github.com/ahmetb/kubectx) for faster switch context and namespace. Then switch to right context and namespace
+    ```
+    kubectx [CONTEXT_NAME]
+    kubectl create namespace flask-backend
+    kubens flask-backend
+    ```
 
-9.  Now, you can access the website by getting IP address in EXTERNAL IP. Copy and run it in web browser.
+8. Create ConfigMap, Deployment and Service
+    ```
+    kubectl create configmap backend-config --from-env-file=.env
+    kubectl apply -f deployment.yaml
+    kubectl apply -f service.yaml
+    ```
+
+9.  Now, you can access the website by getting IP address in EXTERNAL IP. Use this with port 3030 to config in frontend.
     ```
     kubectl get service
     ```

@@ -16,20 +16,7 @@
     python generate_data.py # Optional
     python3 -m flask run
     ``` 
-    **[Optional]** You can build a image backend and run it.
-    ```
-    cd News-System-BE
-    docker build -t be-image .
-    docker tag be-image us-central1-docker.pkg.dev/news-database-55/docker-repo/be-image:tag1
-    docker push us-central1-docker.pkg.dev/news-database-55/docker-repo/be-image:tag1 
-    kubectl create namespace flask-backend
-    kubens flask-backend
-    kubectl create configmap backend-config --from-env-file=.env
-    kubectl apply -f deployment.yaml
-    kubectl apply -f service.yaml
-    kubectl get service
-    # Here, you can see the external ip, set it in `.env` file in FE with port 3030
-    ```
+    **[OPTIONAL]** Please see full detail in `News=System-BE/` if you want to deploy the BE as image in GKE (Google Kubernetes Engine)
 
 3. Create `.env` file in `News-System-FE/` by following `.env.example` file, then open other terminal to run frontend
     ```
