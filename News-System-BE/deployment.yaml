@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-image
+  namespace: flask-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: be-image
+  template:
+    metadata:
+      labels:
+        app: be-image
+    spec:
+      containers:
+      - name: be-image
+        image: us-central1-docker.pkg.dev/news-database-55/docker-repo/be-image:tag1
+        ports:
+        - containerPort: 3030
+        envFrom:
+        - configMapRef:
+            name: backend-config

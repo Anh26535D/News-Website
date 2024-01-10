@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: be-service
+  namespace: flask-backend
+spec:
+  selector:
+    app: be-image
+  ports:
+    - protocol: TCP
+      port: 3030  # External port
+      targetPort: 3030  # Target port on the Pod
+  type: LoadBalancer
