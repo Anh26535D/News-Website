@@ -16,6 +16,13 @@
     python generate_data.py # Optional
     python3 -m flask run
     ``` 
+    **[Optional]** You can build a image backend and run it.
+    ```
+    cd News-System-BE
+    docker build -t be-image .
+    docker run --env-file .env -p 3030:3030 be-image
+    ```
+
 3. Create `.env` file in `News-System-FE/` by following `.env.example` file, then open other terminal to run frontend
     ```
     cd News-System-FE
