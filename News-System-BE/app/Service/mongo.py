@@ -51,11 +51,10 @@ class MongoService():
     
 
     def find_lastest_news(self):
-        self.create_client()
-        db = self.client[self.database_name]
-        new= db['news'].find({},{}).sort("publishedAt",pymongo.DESCENDING).limit(1)[0]
-        new['_id'] = str(new['_id'])
-        self.close()
+        with MongoClient(self.url) as client:
+            db = self.client[self.database_name]
+            new= db['news'].find({},{}).sort("publishedAt",pymongo.DESCENDING).limit(1)[0]
+            new['_id'] = str(new['_id'])
         return jsonify(new)
 
     def search_article(self,q,skip,limit):
