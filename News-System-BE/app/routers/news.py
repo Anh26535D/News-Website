@@ -1,8 +1,7 @@
 import os
 import sys
-sys.path.insert(0,'News-System-BE/app/Service')
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from bson import ObjectId
-
 
 
 MONGO_URI = os.environ.get('MONGO_URI')
@@ -12,11 +11,11 @@ from flask import Blueprint, request
 from Service.mongo import MongoService
 
 news_blueprint = Blueprint('news', __name__,)
-mongo_service = MongoService(url=MONGO_URI,database_name=DB_NAME)
+mongo_service = MongoService(url=MONGO_URI, database_name=DB_NAME)
 
 @news_blueprint.route('/common-articles',methods=['GET'])
 def get_common_articles():
-    params =request.args.to_dict()
+    params = request.args.to_dict()
     query = {
         "urlToImage": {"$ne": ""}
     }
