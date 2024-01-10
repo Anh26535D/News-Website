@@ -5,19 +5,23 @@ var he = require('he');
 
 /* GET home page. */
 router.get("/:idArticle", async function (req, res, next) {
-    var id =  req.params.idArticle
+    var id = req.params.idArticle
+    if ("/news/" + id == "/news/null") {
+        res.redirect("/news"); // redirect to not found page
+        return;
+    }
     var response = await axios.request({
         method: "get",
         baseURL: process.env["BACKEND_URL"],
-        url: "/news/"+id,
+        url: "/news/" + id,
     });
-    data={}
+    data = {}
     if (response.status === 200) {
         data = response.data;
     }
     data2string = JSON.stringify(data)
-    dataEncoded = he.encode(data2string,{encodeEverything:true})
-    res.render("article", {data:dataEncoded});
+    dataEncoded = he.encode(data2string, { encodeEverything: true })
+    res.render("article", { data: dataEncoded });
 });
 
 module.exports = router;
