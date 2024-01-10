@@ -1,5 +1,6 @@
 from flask import jsonify
 from pymongo import MongoClient
+import pymongo
 import nltk
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -48,6 +49,15 @@ class MongoService():
             new['_id'] = str(new['_id'])
         return jsonify(new)
     
+
+    def find_lastest_news(self):
+        self.create_client()
+        db = self.client[self.database_name]
+        new= db['news'].find({},{}).sort("publishedAt",pymongo.DESCENDING).limit(1)[0]
+        new['_id'] = str(new['_id'])
+        self.close()
+        return jsonify(new)
+
     def search_article(self,q,skip,limit):
         with MongoClient(self.url) as client:
             stop_words = set(stopwords.words('english'))
