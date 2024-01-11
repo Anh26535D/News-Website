@@ -27,53 +27,58 @@ $("a[href='#top']").click(function () {
 });
 
 function sendEventKafka(e) {
-    const excludeElement = ["BODY"];
-
-    if (
-        excludeElement.findIndex(
-            (value) => e["originalTarget"]["tagName"] === value
-        ) !== -1
-    ) {
-        return;
-    }
-
-    const listKey = [
-        "clientX",
-        "clientY",
-        "layerX",
-        "layerY",
-        "pageX",
-        "pageX",
-        "type",
-        "originalTarget.baseURI",
-        "originalTarget.innerHTML",
-        "originalTarget.innerText",
-        "originalTarget.localName",
-        "originalTarget.nodeName",
-        "originalTarget.outerHTML",
-        "originalTarget.outerHTML",
-        "originalTarget.tagName",
-        "originalTarget.textContent",
-        "originalTarget.title",
-        "originalTarget.alt",
-    ];
-    var clientEvent = {};
-    listKey.forEach(function (key) {
-        var keyParts = key.split("."); // Handle nested properties
-        var value = e;
-        for (var i = 0; i < keyParts.length; i++) {
-            value = value[keyParts[i]];
-            if (value === undefined) {
-                // Handle undefined values
-                break;
-            }
-        }
-        clientEvent[key] = value;
-    });
-
-    clientEvent["sessionTime"] = Math.floor(
+    e["sessionTime"] = Math.floor(
         (Date.now() - window.localStorage.getItem("START_TIME")) / 1000
     );
+    console.log("Sending Kafka event:", JSON.stringify(e));
+    socket.emit("event_kafka", JSON.stringify(e));
 
-    socket.emit("event_kafka", JSON.stringify(clientEvent));
+    // const excludeElement = ["BODY"];
+
+    // if (
+    //     excludeElement.findIndex(
+    //         (value) => e["originalTarget"]["tagName"] === value
+    //     ) !== -1
+    // ) {
+    //     return;
+    // }
+
+    // const listKey = [
+    //     "clientX",
+    //     "clientY",
+    //     "layerX",
+    //     "layerY",
+    //     "pageX",
+    //     "pageX",
+    //     "type",
+    //     "originalTarget.baseURI",
+    //     "originalTarget.innerHTML",
+    //     "originalTarget.innerText",
+    //     "originalTarget.localName",
+    //     "originalTarget.nodeName",
+    //     "originalTarget.outerHTML",
+    //     "originalTarget.outerHTML",
+    //     "originalTarget.tagName",
+    //     "originalTarget.textContent",
+    //     "originalTarget.title",
+    //     "originalTarget.alt",
+    // ];
+    // var clientEvent = {};
+    // listKey.forEach(function (key) {
+    //     var keyParts = key.split("."); // Handle nested properties
+    //     var value = e;
+    //     for (var i = 0; i < keyParts.length; i++) {
+    //         value = value[keyParts[i]];
+    //         if (value === undefined) {
+    //             // Handle undefined values
+    //             break;
+    //         }
+    //     }
+    //     clientEvent[key] = value;
+    // });
+
+    // clientEvent["sessionTime"] = Math.floor(
+    //     (Date.now() - window.localStorage.getItem("START_TIME")) / 1000
+    // );
+    // socket.emit("event_kafka", JSON.stringify(clientEvent));
 }

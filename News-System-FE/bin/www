@@ -22,43 +22,46 @@ var server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+/**
+ * Create Kafka producer for tracking
+ */
 const { Kafka, CompressionTypes, logLevel } = require("kafkajs");
 
 const host = process.env.KAFKA_URI || ip.address();
 
 const kafka = new Kafka({
-   logLevel: logLevel.DEBUG,
-   brokers: [`${host}:${process.env.KAFKA_PORT}`],
-   clientId: "producer-fe",
+  logLevel: logLevel.DEBUG,
+  brokers: [`${host}:${process.env.KAFKA_PORT}`],
+  clientId: "producer-fe",
 });
 
-const topic = "trackking";
+const topic = "tracking";
 
 io.on("connection", async (socket) => {
-   const producer = kafka.producer();
-   const sendMessage = (message) => {
-       return producer
-           .send({
-               topic,
-               compression: CompressionTypes.GZIP,
-               messages: [{ key: "", value: message }],
-           })
-           .then(console.log)
-           .catch((e) => console.error(`${e.message}`, e));
-   };
-   await producer.connect();
-   const client_event = { sessionId: socket.id, event: "connected" };
-   sendMessage(JSON.stringify(client_event));
-   socket.on("event_kafka", (msg) => {
-       msg_object = JSON.parse(msg);
-       const client_event = { sessionId: socket.id, event: msg_object };
-       sendMessage(JSON.stringify(client_event));
-   });
-   socket.on("disconnect", async (reason) => {
-       const client_event = { sessionId: socket.id, event: "disconnected" };
-       sendMessage(JSON.stringify(client_event));
-       await producer.disconnect();
-   });
+  const producer = kafka.producer();
+  const sendMessage = (message) => {
+    return producer
+      .send({
+        topic,
+        compression: CompressionTypes.GZIP,
+        messages: [{ key: "", value: message }],
+      })
+      .then(console.log)
+      .catch((e) => console.error(`${e.message}`, e));
+  };
+  await producer.connect();
+  const client_event = { sessionId: socket.id, event: "connected" };
+  sendMessage(JSON.stringify(client_event));
+  socket.on("event_kafka", (msg) => {
+    msg_object = JSON.parse(msg);
+    const client_event = { sessionId: socket.id, event: msg_object };
+    sendMessage(JSON.stringify(client_event));
+  });
+  socket.on("disconnect", async (reason) => {
+    const client_event = { sessionId: socket.id, event: "disconnected" };
+    sendMessage(JSON.stringify(client_event));
+    await producer.disconnect();
+  });
 });
 /**
  * Listen on provided port, on all network interfaces.

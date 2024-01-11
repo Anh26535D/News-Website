@@ -3,12 +3,13 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from bson import ObjectId
 
+from flask import Blueprint, request
+
+from Service.mongo import MongoService
+
 
 MONGO_URI = os.environ.get('MONGO_URI')
 DB_NAME = os.environ.get('DB_NAME')
-
-from flask import Blueprint, request
-from Service.mongo import MongoService
 
 news_blueprint = Blueprint('news', __name__,)
 mongo_service = MongoService(url=MONGO_URI, database_name=DB_NAME)
