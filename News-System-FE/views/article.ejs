@@ -30,6 +30,11 @@
             var dataDecoded = he.decode(serverData.replace(/amp;/g, ""));
             data = JSON.parse(dataDecoded);
         </script>
+        <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+        <script>
+            var socket = io();
+            window.sessionStorage.setItem("START_TIME", Date.now());
+        </script>
     </head>
 
     <body>
@@ -247,12 +252,18 @@
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"
         ></script>
+        <script src="/javascripts/main.js"></script>
+
         <script defer>
             var headline = document.getElementsByClassName("headline")[0];
             headline.style.background = `url(${data["urlToImage"]})`;
             var reference = document.getElementById("reference");
             reference.href = data["url"];
+            window.addEventListener("click", sendEventKafka);
+            window.addEventListener("mouseover", sendEventKafka);
+            window.addEventListener("dblclick", sendEventKafka);
+            window.addEventListener("drag", sendEventKafka);
+            window.addEventListener("drop", sendEventKafka);
         </script>
-        <script src="/javascripts/main.js"></script>
     </body>
 </html>
