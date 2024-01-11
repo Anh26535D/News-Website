@@ -1,6 +1,6 @@
-## This is the way to deploy Kafka to the GKE. 
+# This is the way to deploy Kafka to the GKE. 
 
-### Please create cluster and artifact registry before
+## Please create cluster and artifact registry before
 
 1. Change directory
     ```

@@ -1,6 +1,6 @@
-## This is the way to deploy Nodejs frontend to the GKE. 
+# This is the way to deploy Nodejs frontend to the GKE. 
 
-### Please deploy Backend and Kafka first.
+## Please deploy Backend and Kafka first.
 
 1. Build, tag and push the image to artifact registry
     ```

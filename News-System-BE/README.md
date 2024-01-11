@@ -1,6 +1,6 @@
-## This is the way to deploy Flask backend to the GKE. 
+# This is the way to deploy Flask backend to the GKE. 
 
-### Please create cluster and artifact registry before.
+## Please create cluster and artifact registry before.
 
 1. Build, tag and push the image to artifact registry
     ```

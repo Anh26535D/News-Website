@@ -1,6 +1,6 @@
-## This is the way to deploy Consumer to the GKE. 
+# This is the way to deploy Consumer to the GKE. 
 
-### Please create all BE, Kafka, FE first.
+## Please create all BE, Kafka, FE first.
 
 1. Change directory
     ```

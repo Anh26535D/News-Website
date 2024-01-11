@@ -5,19 +5,19 @@ This project combines a Flask backend, Node.js frontend, Kafka messaging system,
 This project contains 4 main modules:
  - Backend
  - Frontend
- - Kafka: 
+ - Kafka
  - Tracking
 
-### Prerequisites
+## Prerequisites
 1. Python 3.9 or higher
 2. Node Package Manager: can be installed [here](https://nodejs.org/en/download)
 3. Docker
 4. Google Cloud Account with activated billing (You can use visa card for trial)
 5. MongoDB Atlas
 
-### Instalation
+## Installation
 
-#### First, you need to set up with GCP (Google Cloud Platform)
+### First, you need to set up with GCP (Google Cloud Platform)
 1. Download gcloud CLI by following [here](https://cloud.google.com/sdk/docs/install)
 
 2. Open Google Cloud SDK Shell, run
@@ -47,7 +47,7 @@ This project contains 4 main modules:
 
 6.  Download `kubens` and `kubectx` [here](https://github.com/ahmetb/kubectx) for faster switch context and namespace.
 
-#### Next, you will set up `.env` file by following the `.env.example` in each module. Follow all step in each module to deploy to GKE. Following this
+### Next, you will set up `.env` file by following the `.env.example` in each module. Follow all step in each module to deploy to GKE. Following this
 1. News-System-BE
 2. News-System-Kafka
 3. News-System-FE
