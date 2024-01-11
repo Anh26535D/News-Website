@@ -1,27 +1,54 @@
-### Requirements
-1. Python
+# News website with Kafka for behaviour tracking
+
+This project combines a Flask backend, Node.js frontend, Kafka messaging system, and MongoDB database to create a comprehensive news website. The use of Kafka allows for efficient behavior tracking, ensuring a seamless experience for both users and administrators.
+
+This project contains 4 main modules:
+ - Backend
+ - Frontend
+ - Kafka: 
+ - Tracking
+
+### Prerequisites
+1. Python 3.9 or higher
 2. Node Package Manager: can be installed [here](https://nodejs.org/en/download)
 3. Docker
+4. Google Cloud Account with activated billing (You can use visa card for trial)
+5. MongoDB Atlas
 
-### Usage
-1. **[OPTIONAL]** You can ignore `mongo_compose.yaml` if you use other mongodb instead of container, otherwise, run
+### Instalation
+
+#### First, you need to set up with GCP (Google Cloud Platform)
+1. Download gcloud CLI by following [here](https://cloud.google.com/sdk/docs/install)
+
+2. Open Google Cloud SDK Shell, run
     ```
-    docker compose -f mongo_compose.yaml up -d
+    gcloud init
+    ```
+    You can find the tutorial by Google Cloud for completing the initialization.
+
+3. Create artifact reposotory. This likes private docker registry (Docker Hub)
+    ```
+    gcloud artifacts repositories create docker-repo --repository-format=docker --location=us-central1 --description="Docker repository"
+    ```
+    and verify:
+    ```
+    gcloud artifacts repositories list
     ```
 
-2. Create `.env` file in `News-System-BE/` by following `.env.example` file, fetch data to mongodb and run server
+4. Configure authentication
     ```
-    cd News-System-BE
-    python3 -m pip install -r requirements.txt
-    python generate_data.py # Optional
-    python3 -m flask run
-    ``` 
-    **[OPTIONAL]** Please see full detail in `News=System-BE/` if you want to deploy the BE as image in GKE (Google Kubernetes Engine)
+    gcloud auth configure-docker us-central1-docker.pkg.dev
+    ```
 
-3. Create `.env` file in `News-System-FE/` by following `.env.example` file, then open other terminal to run frontend
+5. Create GKE cluster (remember to enable Kubernetes Engine API)
     ```
-    cd News-System-FE
-    npm install
-    npm start
+    gcloud container --project "[PROJECT_ID]" clusters create-auto "autopilot-cluster-1" --region "us-central1" --release-channel "regular" --network "projects/[PROJECT_ID]/global/networks/default" --subnetwork "projects/[PROJECT_ID]/regions/us-central1/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
     ```
-4. Open web browser and access `localhost:[PORT]`, where PORT can set in `.env` file in `News-System-FE/`
+
+6.  Download `kubens` and `kubectx` [here](https://github.com/ahmetb/kubectx) for faster switch context and namespace.
+
+#### Next, you will set up `.env` file by following the `.env.example` in each module. Follow all step in each module to deploy to GKE. Following this
+1. News-System-BE
+2. News-System-Kafka
+3. News-System-FE
+4. News-System-Tracking

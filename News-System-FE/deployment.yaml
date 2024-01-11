@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-image
+  namespace: npm-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fe-image
+  template:
+    metadata:
+      labels:
+        app: fe-image
+    spec:
+      containers:
+      - name: fe-image
+        image: us-central1-docker.pkg.dev/news-database-55/docker-repo/fe-image:tag1
+        ports:
+        - containerPort: 3300
+        envFrom:
+        - configMapRef:
+            name: fe-config

@@ -88,8 +88,8 @@ function sendEventKafka(e) {
     clientEvent["target"] = fillterChildObject(e["target"]);
 
     clientEvent["sessionTime"] = Math.floor(
-        (Date.now() - window.sessionStorage.getItem("START_TIME")) / 1000
+        (Date.now() - window.sessionStorage.getItem("START_TIME"))
     );
-    console.log(clientEvent);
+
     socket.emit("event_kafka", JSON.stringify(clientEvent));
 }

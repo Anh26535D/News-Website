@@ -7,6 +7,7 @@ var he = require("he");
 router.get("/:idArticle", async function (req, res, next) {
     var id = req.params.idArticle;
     data = {};
+    
     if (id !== "null") {
         var response = await axios.request({
             method: "get",

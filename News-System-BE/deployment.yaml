@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: be-image
-  namespace: flask-backend
+  namespace: flask-be
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: be-image
@@ -20,4 +20,4 @@ spec:
         - containerPort: 3030
         envFrom:
         - configMapRef:
-            name: backend-config
+            name: be-config
