@@ -1,4 +1,4 @@
-# News website with Kafka for behaviour tracking
+# News Website Behaviour Tracking and GKE deployment
 
 This project combines a Flask backend, Node.js frontend, Kafka messaging system, and MongoDB database to create a comprehensive news website. The use of Kafka allows for efficient behavior tracking, ensuring a seamless experience for both users and administrators.
 
