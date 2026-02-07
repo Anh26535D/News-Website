@@ -35,7 +35,7 @@ spec:
         - name: KAFKA_BROKER_ID
           value: "1"
         - name: KAFKA_ZOOKEEPER_CONNECT
-          value: "34.118.232.81:2181"
+          value: "34.118.225.58:2181"
         - name: KAFKA_LISTENERS
           value: "PLAINTEXT://:9092"
         - name: KAFKA_ADVERTISED_LISTENERS
