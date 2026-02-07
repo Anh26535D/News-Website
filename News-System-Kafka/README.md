@@ -24,6 +24,6 @@
     ```
     , and put it in `02-kafka.yaml` file at env `KAFKA_ZOOKEEPER_CONNECT`. Then apply
     ```
-    kubectl apply -f service.yaml
+    kubectl apply -f 02-kafka.yaml
     ```
     

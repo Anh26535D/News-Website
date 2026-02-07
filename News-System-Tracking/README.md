@@ -10,8 +10,8 @@
 2. Build, tag and push the image to artifact registry
     ```
     docker build -t consumer .
-    docker tag consumer us-central1-docker.pkg.dev/news-database-55/docker-repo/consumer:tag1
-    docker push us-central1-docker.pkg.dev/news-database-55/docker-repo/consumer:tag1 
+    docker tag consumer us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/consumer:tag1
+    docker push us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/consumer:tag1 
     ```
 
 3.  Using `kubens` and `kubectx` to switch to right context and namespace
@@ -23,6 +23,7 @@
 
 4. Create Deployment for consumer.
     ```
+    kubectl create configmap consumer-config --from-env-file=.env
     kubectl apply -f consumer.yaml
     ```
     
