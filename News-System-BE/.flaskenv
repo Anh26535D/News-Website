@@ -1,2 +1,2 @@
-FLASK_APP=app/app.py
+FLASK_APP=wsgi.py
 FLASK_RUN_PORT=3030

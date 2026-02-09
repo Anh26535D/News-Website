@@ -1,11 +1,26 @@
 from flask import Flask
-from routers.news import news_blueprint
+from .routers.news import news_blueprint
+
+# from .routers.track import track_blueprint
+from app.service.mongo import MongoService
+from app.service.seeder import NewsDataGenerator
+import os
 
 
 def create_app():
-    app = Flask(__name__)
-    app.config.from_pyfile('settings.py')
+    fapp = Flask(__name__)
+    mongo_uri = os.environ.get("MONGO_URI")
+    db_name = os.environ.get("DB_NAME")
+    mongo_service = MongoService(url=mongo_uri, database_name=db_name)
 
-    app.register_blueprint(news_blueprint,url_prefix = "/news")
+    @fapp.cli.command("seed")
+    def seed_db():
+        """Lệnh: flask seed"""
+        seeder = NewsDataGenerator(
+            db=mongo_service.db, newsapi_apikey=os.environ.get("NEWSAPI_APIKEY")
+        )
+        seeder.seed()
 
-    return app
+    fapp.register_blueprint(news_blueprint, url_prefix="/news")
+    # app.register_blueprint(track_blueprint, url_prefix="/track")
+    return fapp

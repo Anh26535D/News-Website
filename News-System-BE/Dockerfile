@@ -1,16 +1,35 @@
-FROM python:3.9-slim AS compile-image
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends build-essential gcc
+FROM python:3.12-slim AS builder
 
-RUN python -m venv /opt/venv
+WORKDIR /build
 
-ENV PATH="/opt/venv/bin:$PATH"
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 
-FROM python:3.9-slim AS build-image
-COPY --from=compile-image /opt/venv /opt/venv
+
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/install/bin:$PATH" \
+    PYTHONPATH="/install/lib/python3.12/site-packages:$PYTHONPATH"
+
+WORKDIR /app
+
+COPY --from=builder /install /install
+
 COPY . .
-ENV PATH="/opt/venv/bin:$PATH"
-CMD ["python", "-m", "flask", "run", "--host=0.0.0.0"]
+
+RUN chmod +x run.sh && \
+    useradd -m nonroot && \
+    chown -R nonroot:nonroot /app
+
+USER nonroot
+
+EXPOSE 8000
+
+ENTRYPOINT ["./run.sh"]
