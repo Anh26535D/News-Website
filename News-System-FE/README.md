@@ -6,8 +6,8 @@
     ```
     cd News-System-FE
     docker build -t fe-image .
-    docker tag fe-image us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1
-    docker push us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1 
+    docker tag fe-image asia-southeast1-docker.pkg.dev/crested-aquifer-485713-v5/docker-repo/fe-image:tag1
+    docker push asia-southeast1-docker.pkg.dev/crested-aquifer-485713-v5/docker-repo/fe-image:tag1 
     ```
 
 2.  Using `kubens` and `kubectx` to switch to right context and namespace

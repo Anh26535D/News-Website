@@ -8,18 +8,18 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: be-image
-  minReplicas: 2   # Số lượng pod tối thiểu
-  maxReplicas: 55  # Số lượng pod tối đa
+  minReplicas: 3   # Số lượng pod tối thiểu
+  maxReplicas: 10  # Số lượng pod tối đa
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 70 # Scale up nếu CPU trung bình vượt quá 70% của request (250m)
+        averageUtilization: 50 # Scale up nếu CPU trung bình vượt quá 50% của request (250m)
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
-        averageUtilization: 80 # Scale up nếu Memory trung bình vượt quá 80% của request (512Mi)
+        averageUtilization: 50 # Scale up nếu Memory trung bình vượt quá 50% của request (512Mi)

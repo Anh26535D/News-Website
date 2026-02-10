@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: locust-image
-        image: us-central1-docker.pkg.dev/news-database-55/docker-repo/locust-image:tag1
+        image: asia-southeast1-docker.pkg.dev/crested-aquifer-485713-v5/docker-repo/locust-image:tag1
         resources:
           requests:
             cpu: "250m"

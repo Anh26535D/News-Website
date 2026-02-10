@@ -10,8 +10,8 @@
 2. Build, tag and push the image to artifact registry
     ```
     docker build -t consumer .
-    docker tag consumer us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/consumer:tag1
-    docker push us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/consumer:tag1 
+    docker tag consumer asia-southeast1-docker.pkg.dev/crested-aquifer-485713-v5/docker-repo/consumer:tag1
+    docker push asia-southeast1-docker.pkg.dev/crested-aquifer-485713-v5/docker-repo/consumer:tag1 
     ```
 
 3.  Using `kubens` and `kubectx` to switch to right context and namespace

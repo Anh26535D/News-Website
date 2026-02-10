@@ -6,8 +6,8 @@
     ```
     cd News-System-BE
     docker build -t be-image .
-    docker tag be-image us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/be-image:tag1
-    docker push us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/be-image:tag1 
+    docker tag be-image asia-southeast1-docker.pkg.dev/crested-aquifer-485713-v5/docker-repo/be-image:tag1
+    docker push asia-southeast1-docker.pkg.dev/crested-aquifer-485713-v5/docker-repo/be-image:tag1
     be-image:tag1
     ```
 
