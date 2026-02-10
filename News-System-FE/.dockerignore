@@ -1,7 +1,0 @@
-# Git
-.git
-.gitignore
-.gitattributes
-
-node_modules
-package-lock.json
