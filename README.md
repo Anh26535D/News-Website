@@ -1,4 +1,6 @@
-# News Website Behaviour Tracking and GKE deployment
+# Real-time News Website Behaviour Tracking and GKE deployment
+
+Project ID: news-system-cloud-project
 
 This project combines a Flask backend, Node.js frontend, Kafka messaging system, and MongoDB database to create a comprehensive news website. The use of Kafka allows for efficient behavior tracking, ensuring a seamless experience for both users and administrators.
 
@@ -42,13 +44,25 @@ This project contains 4 main modules:
 
 5. Create GKE cluster (remember to enable Kubernetes Engine API)
     ```
-    gcloud container --project "[PROJECT_ID]" clusters create-auto "autopilot-cluster-1" --region "us-central1" --release-channel "regular" --network "projects/[PROJECT_ID]/global/networks/default" --subnetwork "projects/[PROJECT_ID]/regions/us-central1/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
+    gcloud container --project "news-system-cloud-project" clusters create-auto "autopilot-cluster-1" --region "us-central1" --release-channel "regular" --network "projects/news-system-cloud-project/global/networks/default" --subnetwork "projects/news-system-cloud-project/regions/us-central1/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
     ```
 
 6.  Download `kubens` and `kubectx` [here](https://github.com/ahmetb/kubectx) for faster switch context and namespace.
 
 ### Next, you will set up `.env` file by following the `.env.example` in each module. Follow all step in each module to deploy to GKE. Following this
+0. Run generata data
 1. News-System-BE
 2. News-System-Kafka
 3. News-System-FE
 4. News-System-Tracking
+
+### Some helpful commands
+1. List all context
+    ```
+    kubectl config get-contexts
+    ```
+
+2. List all namespace
+    ```
+    kubectl get ns
+    ```

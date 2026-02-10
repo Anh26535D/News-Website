@@ -2,7 +2,13 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
+1. Build, tag and push the image to artifact registry
+    ```
+    cd News-System-FE
+    docker build -t fe-image .
+    docker tag fe-image us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1
+    docker push us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1 
+    ```
 
 [VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
