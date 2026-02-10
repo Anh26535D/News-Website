@@ -2,4 +2,4 @@
 
 flask seed
 
-gunicorn -w 4 -b 0.0.0.0 'wsgi:run()'
+gunicorn -w 8 -b 0.0.0.0 'wsgi:run()'

@@ -1,14 +1,15 @@
 from flask import Flask
 from .routers.news import news_blueprint
 
-# from .routers.track import track_blueprint
+from .routers.track import track_blueprint
 from app.service.mongo import MongoService
 from app.service.seeder import NewsDataGenerator
 import os
-
+from flask_cors import CORS
 
 def create_app():
     fapp = Flask(__name__)
+    CORS(fapp)
     mongo_uri = os.environ.get("MONGO_URI")
     db_name = os.environ.get("DB_NAME")
     mongo_service = MongoService(url=mongo_uri, database_name=db_name)
@@ -22,5 +23,5 @@ def create_app():
         seeder.seed()
 
     fapp.register_blueprint(news_blueprint, url_prefix="/news")
-    # app.register_blueprint(track_blueprint, url_prefix="/track")
+    fapp.register_blueprint(track_blueprint, url_prefix="/track")
     return fapp

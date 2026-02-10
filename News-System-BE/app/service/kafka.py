@@ -6,14 +6,23 @@ class KafkaPushService:
     def __init__(self, bootstrap_servers, api_key, api_secret):
         self.config = {
             "bootstrap.servers": bootstrap_servers,
-            "sasl.username": api_key,
-            "sasl.password": api_secret,
-            "security.protocol": "SASL_SSL",
-            "sasl.mechanisms": "PLAIN",
             "acks": "all",
             "retries": 5,
-            "linger.ms": 10,
         }
+
+        if api_key and api_secret:
+            self.config.update(
+                {
+                    "security.protocol": "SASL_SSL",
+                    "sasl.mechanisms": "PLAIN",
+                    "sasl.username": api_key,
+                    "sasl.password": api_secret,
+                }
+            )
+        else:
+            self.config.update({"security.protocol": "PLAINTEXT"})
+
+        self.producer = Producer(self.config)
         self.producer = Producer(self.config)
 
     def _delivery_callback(self, err, msg):
