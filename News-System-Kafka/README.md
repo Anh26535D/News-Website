@@ -10,20 +10,12 @@
 2.  Using `kubens` and `kubectx` to switch to right context and namespace
     ```
     kubectx [CONTEXT_NAME]
-    kubectl create namespace kafka
-    kubens kafka
+    kubens news-system
     ```
 
 3. Create Deployment and Service for Zookeeper and Kafka.
     ```
     kubectl apply -f 01-zookeeper.yaml
-    ```
-    After create zookeeper service, you can find the clusterIP of zookeep by
-    ```
-    kubectl get svc
-    ```
-    , and put it in `02-kafka.yaml` file at env `KAFKA_ZOOKEEPER_CONNECT`. Then apply
-    ```
     kubectl apply -f 02-kafka.yaml
     ```
     

@@ -49,6 +49,11 @@ This project contains 4 main modules:
 
 6.  Download `kubens` and `kubectx` [here](https://github.com/ahmetb/kubectx) for faster switch context and namespace.
 
+7. Create a new namespace
+    ```
+    kubectl create namespace news-system
+    ```
+
 ### Next, you will set up `.env` file by following the `.env.example` in each module. Follow all step in each module to deploy to GKE. Following this
 0. Run generata data
 1. News-System-Kafka

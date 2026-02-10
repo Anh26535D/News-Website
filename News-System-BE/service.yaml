@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: be-service
-  namespace: flask-be
+  namespace: news-system
 spec:
   selector:
     app: be-image

@@ -17,8 +17,7 @@
 3.  Using `kubens` and `kubectx` to switch to right context and namespace
     ```
     kubectx [CONTEXT_NAME]
-    kubectl create namespace consumer
-    kubens consumer
+    kubens news-system
     ```
 
 4. Create Deployment for consumer.

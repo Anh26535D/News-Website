@@ -13,8 +13,7 @@
 2.  Using `kubens` and `kubectx` to switch to right context and namespace
     ```
     kubectx [CONTEXT_NAME]
-    kubectl create namespace flask-be
-    kubens flask-be
+    kubens news-system
     ```
 
 3. Create ConfigMap, Deployment and Service
