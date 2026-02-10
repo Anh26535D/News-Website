@@ -55,7 +55,6 @@ This project contains 4 main modules:
     ```
 
 ### Next, you will set up `.env` file by following the `.env.example` in each module. Follow all step in each module to deploy to GKE. Following this
-0. Run generata data
 1. News-System-Kafka
 2. News-System-BE
 3. News-System-FE
