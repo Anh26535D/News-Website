@@ -38,38 +38,13 @@ if __name__ == "__main__":
                 continue
             
             json_data = json.loads(msg.value().decode("utf-8"))
-            session_id = json_data["sessionId"]
-            event = json_data["event"]
+            # session_id = json_data["session_id"]
+            # user_id = json_data["user_id"]
+            # event = json_data["event_type"]
+            # payload = json_data["payload"]
+            # device = json_data["device"]
 
-            if type(event) != dict:
-                event = {"isConnectEvent": event}
-                session_time = None
-            else:
-                event["isConnectEvent"] = "no"
-                session_time = event["sessionTime"]
-
-            key_to_extract = [
-                "isConnectEvent",
-                "isTrusted", 
-                "screenX", "screenY", "clientX", "clientY", 
-                "x", "y", 
-                "timeStamp", 
-                "target"
-            ]
-            processed_data = {key: event.get(key, None) for key in key_to_extract}
-            processed_data["sessionId"] = session_id
-            processed_data["sessionTime"] = session_time
-
-            key_target_to_extract = [
-                "tagName",
-                "className",
-                "id",
-                "innerText",
-            ]
-            if processed_data["target"]:
-                processed_data["target"] = {key: processed_data["target"].get(key, None) for key in key_target_to_extract}
-
-            mongo_collection.insert_one(processed_data)
+            mongo_collection.insert_one(json_data)
             print("Inserted data to MongoDB")
     except KeyboardInterrupt:
         pass
