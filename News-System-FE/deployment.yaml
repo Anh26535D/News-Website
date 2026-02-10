@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-image
+  namespace: npm-fe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fe-image
+  template:
+    metadata:
+      labels:
+        app: fe-image
+    spec:
+      containers:
+      - name: fe-image
+        image: us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 8080
+        # --- THÊM MOUNT VÀO ĐÂY ---
+        volumeMounts:
+        - name: ssl-certs
+          mountPath: "/etc/nginx/certs"
+          readOnly: true
+        - name: nginx-config
+          mountPath: "/etc/nginx/conf.d/default.conf" # Ghi đè file config mặc định
+          subPath: nginx.conf # Chỉ mount đúng file nginx.conf
+        # --------------------------
+        envFrom:
+        - configMapRef:
+            name: fe-config
+            # --- ĐỊNH NGHĨA VOLUME ---
+      volumes:
+      - name: ssl-certs
+        secret: # Thay 'secret' bằng 'configMap' nếu bạn vẫn muốn dùng ConfigMap
+          secretName: fe-ssl-cert # Tên của Secret/ConfigMap chứa file cert
+      - name: nginx-config
+        configMap:
+          name: fe-nginx-config
+      # --------------------------

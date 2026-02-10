@@ -2,59 +2,68 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
-1. Build, tag and push the image to artifact registry
-    ```
-    cd News-System-FE
+## Deployment Steps
+
+1.  **Build, tag and push the image to artifact registry**
+
+    ```bash
+    # Ensure you are in the News-System-FE directory
     docker build -t fe-image .
     docker tag fe-image us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1
     docker push us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1 
     ```
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+2.  **Switch to the right context and namespace**
 
-## Recommended Browser Setup
+    ```bash
+    # kubectx [CONTEXT_NAME]
+    kubectl create namespace npm-fe
+    kubens npm-fe
+    ```
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+3.  **Add SSL certificate**
 
-## Type Support for `.vue` Imports in TS
+    Generate a self-signed certificate for testing/development purposes.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+    ```bash
+    # Create certs folder if it doesn't exist
+    mkdir -p certs
 
-## Customize configuration
+    # Generate self-signed certificate
+    openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
+      -keyout certs/privkey.pem \
+      -out certs/fullchain.pem \
+      -subj "/C=VN/ST=Hanoi/L=Hanoi/O=IT/CN=localhost"
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+    # Create Secret in the namespace
+    kubectl create secret generic fe-ssl-cert \
+      --from-file=fullchain.pem=certs/fullchain.pem \
+      --from-file=privkey.pem=certs/privkey.pem \
+      -n npm-fe
+    ```
 
-## Project Setup
+4.  **Create ConfigMap, Deployment and Service**
 
-```sh
-npm install
-```
+    Make sure you have your `.env` file ready locally before running these commands.
 
-### Compile and Hot-Reload for Development
+    ```bash
+    # Create env config map
+    kubectl create configmap fe-config --from-env-file=.env -n npm-fe
 
-```sh
-npm run dev
-```
+    # Apply Nginx configuration
+    kubectl apply -f fe-nginx-config.yaml
 
-### Type-Check, Compile and Minify for Production
+    # Apply Deployment and Service
+    kubectl apply -f deployment.yaml
+    kubectl apply -f service.yaml
+    ```
 
-```sh
-npm run build
-```
+5.  **Access the application**
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+    Get the external IP address of your service.
 
-```sh
-npm run test:unit
-```
+    ```bash
+    kubectl get service -n npm-fe
+    ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+    Wait for the External IP to be assigned. Once assigned, you can access the website using `https://<EXTERNAL-IP>:8080`. Note that since we configured SSL, you should use HTTPS (though with a self-signed cert, the browser will warn you).
