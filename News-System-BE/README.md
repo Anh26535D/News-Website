@@ -24,7 +24,7 @@
     kubectl apply -f service.yaml
     ```
 
-4.  Now, you can access the website by getting IP address in EXTERNAL IP. You may wait for minutes to activate service. **Use this with port 3030 to config in frontend**.
+4.  Now, you can access the website by getting IP address in EXTERNAL IP. You may wait for minutes to activate service. **Use this with port 8000 to config in frontend**.
     ```
     kubectl get service
     ```

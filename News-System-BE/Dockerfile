@@ -24,7 +24,8 @@ COPY --from=builder /install /install
 
 COPY . .
 
-RUN chmod +x run.sh && \
+RUN sed -i 's/\r$//' run.sh && \
+    chmod +x run.sh && \
     useradd -m nonroot && \
     chown -R nonroot:nonroot /app
 

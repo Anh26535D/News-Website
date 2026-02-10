@@ -15,9 +15,17 @@ spec:
     spec:
       containers:
       - name: be-image
-        image: us-central1-docker.pkg.dev/news-database-55/docker-repo/be-image:tag1
+        image: us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/be-image:tag1
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
         ports:
-        - containerPort: 3030
+        - containerPort: 8000
         envFrom:
         - configMapRef:
             name: be-config
