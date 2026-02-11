@@ -9,18 +9,11 @@ This template should help get you started developing with Vue 3 in Vite.
     ```bash
     # Ensure you are in the News-System-FE directory
     docker build -t fe-image .
-    docker tag fe-image us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1
-    docker push us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1 
+    docker tag fe-image asia-southeast1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1
+    docker push asia-southeast1-docker.pkg.dev/news-system-cloud-project/docker-repo/fe-image:tag1 
     ```
 
-2.  **Switch to the right context and namespace**
-
-    ```bash
-    # kubectx [CONTEXT_NAME]
-    kubens news-system
-    ```
-
-3.  **Add SSL certificate**
+2.  **Add SSL certificate**
 
     Generate a self-signed certificate for testing/development purposes.
 
@@ -35,7 +28,7 @@ This template should help get you started developing with Vue 3 in Vite.
     kubectl create secret generic fe-ssl-cert --from-file=fullchain.pem=certs/fullchain.pem --from-file=privkey.pem=certs/privkey.pem -n news-system
     ```
 
-4.  **Create ConfigMap, Deployment and Service**
+3.  **Create ConfigMap, Deployment and Service**
 
     Make sure you have your `.env` file ready locally before running these commands.
 
@@ -51,7 +44,7 @@ This template should help get you started developing with Vue 3 in Vite.
     kubectl apply -f service.yaml
     ```
 
-5.  **Access the application**
+4.  **Access the application**
 
     Get the external IP address of your service.
 

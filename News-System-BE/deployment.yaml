@@ -4,7 +4,6 @@ metadata:
   name: be-image
   namespace: news-system
 spec:
-  replicas: 3
   selector:
     matchLabels:
       app: be-image
@@ -15,14 +14,14 @@ spec:
     spec:
       containers:
       - name: be-image
-        image: us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/be-image:tag1
+        image: asia-southeast1-docker.pkg.dev/news-system-cloud-project/docker-repo/be-image:tag1
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "256Mi"
+            memory: "512Mi"
             cpu: "250m"
           limits:
-            memory: "512Mi"
+            memory: "1Gi"
             cpu: "500m"
         ports:
         - containerPort: 8000

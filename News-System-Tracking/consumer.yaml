@@ -15,14 +15,14 @@ spec:
     spec:
       containers:
       - name: consumer
-        image: us-central1-docker.pkg.dev/news-system-cloud-project/docker-repo/consumer:tag1
+        image: asia-southeast1-docker.pkg.dev/news-system-cloud-project/docker-repo/consumer:tag1
         resources:
           requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "256Mi"
+            memory: "512Mi"
             cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
         envFrom:
         - configMapRef:
             name: consumer-config

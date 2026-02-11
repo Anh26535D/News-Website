@@ -30,7 +30,7 @@ This project contains 4 main modules:
 
 3. Create artifact reposotory. This likes private docker registry (Docker Hub)
     ```
-    gcloud artifacts repositories create docker-repo --repository-format=docker --location=us-central1 --description="Docker repository"
+    gcloud artifacts repositories create docker-repo --repository-format=docker --location=asia-southeast1 --description="Docker repository"
     ```
     and verify:
     ```
@@ -39,12 +39,12 @@ This project contains 4 main modules:
 
 4. Configure authentication
     ```
-    gcloud auth configure-docker us-central1-docker.pkg.dev
+    gcloud auth configure-docker asia-southeast1-docker.pkg.dev
     ```
 
 5. Create GKE cluster (remember to enable Kubernetes Engine API)
     ```
-    gcloud container --project "news-system-cloud-project" clusters create-auto "autopilot-cluster-1" --region "us-central1" --release-channel "regular" --network "projects/news-system-cloud-project/global/networks/default" --subnetwork "projects/news-system-cloud-project/regions/us-central1/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
+    gcloud container --project "news-system-cloud-project" clusters create-auto "autopilot-cluster-1" --region "asia-southeast1" --release-channel "regular" --network "projects/news-system-cloud-project/global/networks/default" --subnetwork "projects/news-system-cloud-project/regions/asia-southeast1/subnetworks/default" --cluster-ipv4-cidr "/17" --binauthz-evaluation-mode=DISABLED
     ```
 
 6.  Download `kubens` and `kubectx` [here](https://github.com/ahmetb/kubectx) for faster switch context and namespace.
@@ -52,6 +52,12 @@ This project contains 4 main modules:
 7. Create a new namespace
     ```
     kubectl create namespace news-system
+    ```
+
+8.  Using `kubens` and `kubectx` to switch to right context and namespace
+    ```
+    kubectx [CONTEXT_NAME]
+    kubens news-system
     ```
 
 ### Next, you will set up `.env` file by following the `.env.example` in each module. Follow all step in each module to deploy to GKE. Following this
@@ -75,3 +81,6 @@ This project contains 4 main modules:
 ```
 kubectl get pods
 ```
+
+gcloud container clusters list
+gcloud container clusters delete autopilot-cluster-1 --region us-central1

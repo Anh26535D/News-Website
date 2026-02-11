@@ -7,13 +7,7 @@
     cd News-System-Kafka
     ```
 
-2.  Using `kubens` and `kubectx` to switch to right context and namespace
-    ```
-    kubectx [CONTEXT_NAME]
-    kubens news-system
-    ```
-
-3. Create Deployment and Service for Zookeeper and Kafka.
+2. Create Deployment and Service for Zookeeper and Kafka.
     ```
     kubectl apply -f 01-zookeeper.yaml
     kubectl apply -f 02-kafka.yaml
